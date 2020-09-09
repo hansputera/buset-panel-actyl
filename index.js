@@ -1,7 +1,6 @@
 
 const Ptero = require("nodeactyl");
 const Client = Ptero.Application;
-const { BingTranslator } = require("@horat1us/bing-translator");
 const { get } = require("superagent");
 
 
@@ -105,26 +104,6 @@ bot.on("message", async message => {
         .setDescription(c)
         .setTimestamp();
         message.channel.send(e);
-    }
-
-    if (cmd === "talk") {
-        const y = args[0];
-        if (!y) return message.reply("LoL, input one word or over.");
-        else {
-            message.channel.startTyping();
-            const translate1 = new BingTranslator({ source: "id", target: "en"});
-            const translate2 = new BingTranslator({ source: 'en', target: "id"});
-
-            const cara1 = await translate1.evaluate(y);
-            translate1.release();
-
-            const { body } = await get(`http://api.brainshop.ai/get?bid=116873&key=Mn4jJApGnIKWDqsH&uid=${message.author.id}&msg=${cara1}`);
-            const cara2 = await translate2.evaluate(body.cnt);
-
-            translate2.release();
-            message.channel.send(cara2);
-            message.channel.stopTyping();
-        }
     }
 });
 
